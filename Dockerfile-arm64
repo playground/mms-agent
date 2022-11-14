@@ -1,0 +1,13 @@
+FROM arm64v8/alpine:latest
+
+RUN apk --no-cache --update add jq curl bash nodejs-current npm procps
+
+WORKDIR /server
+
+COPY . /server/
+
+RUN npm install -g npm
+RUN npm install
+RUN npm run build
+
+CMD ["npm", "start"]

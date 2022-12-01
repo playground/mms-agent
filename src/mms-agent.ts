@@ -93,6 +93,7 @@ export class Mms {
                       if(zipFile.isZipSync(`${this.sharedVolume}/${this.tempFile}`)) {                    
                         console.log('zipped file has arrived...')
                         await this.moveFileToShare(`${this.sharedVolume}/${this.tempFile}`, `${this.sharedVolume}/${this.updateFilename}`);
+                        this.resetTimer();
                       } else {                                                                            
                         console.log('json')
                         let json = JSON.parse(readFileSync(`${this.sharedVolume}/${this.tempFile}`).toString());                                                               
@@ -100,28 +101,37 @@ export class Mms {
                           console.log(json.hello)
                           await this.moveFileToShare(`${this.sharedVolume}/${this.tempFile}`, `${this.sharedVolume}/${this.updateFilename}`);
                           //await this.writeFileToShare(json, `${this.sharedVolume}/${this.tempFile}`, `${this.sharedVolume}/${this.updateFilename}`);
+                          this.resetTimer();
                         } else {
                           console.log('Invalid payload')
+                          this.resetTimer();
                         }
                       }   
                     } else {
                       console.log("ERROR ", err);
+                      this.resetTimer();
                     }
                   });      
                 } else {
                   console.log("ERROR ", err);
+                  this.resetTimer();
                 }
               });
+            } else {
+              this.resetTimer();
             }
+          } else {
+            this.resetTimer();
           }
         } else {
           console.log('ERROR ', err);
+          this.resetTimer();
         }
       });
     } catch(e) {
       console.log(e);
+      this.resetTimer();
     }
-    this.resetTimer();
   }
 
   sleep(ms) {

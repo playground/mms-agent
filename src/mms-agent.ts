@@ -92,8 +92,8 @@ export class Mms {
                       console.log('ESS object received command was successful.');
                       if(zipFile.isZipSync(`${this.sharedVolume}/${this.tempFile}`)) {                    
                         console.log('zipped file has arrived...')
-                        await this.moveFileToShare(`${this.sharedVolume}/${this.tempFile}`, `${this.sharedVolume}/${this.updateFilename}`);
-                        this.resetTimer();
+                        await this.moveFileToShare(`${this.sharedVolume}/${this.tempFile}`, `${this.sharedVolume}/model.zip`);  //hardcode model.zip for now, need to find a way to pass in filename
+                         this.resetTimer();
                       } else {                                                                            
                         console.log('json')
                         let json = JSON.parse(readFileSync(`${this.sharedVolume}/${this.tempFile}`).toString());                                                               
